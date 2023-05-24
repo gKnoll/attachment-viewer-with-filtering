@@ -764,6 +764,7 @@ class PhotoCentric extends Widget {
               id="filter-list"
               layerExpressions={layerExpression}
               view={this.view?.map}
+              onfilterUpdate={this._zoomToResultExtent}
             ></instant-apps-filter-list>
           </div>
         ) : null}
@@ -2201,6 +2202,25 @@ c6.6,0,12-5.4,12-12S18.6,0,12,0L12,0z"
 
   private _saveAttributeEdits(): void {
     (this.viewModel.featureFormWidget as __esri.FeatureForm).submit();
+  }
+
+  private _zoomToResultExtent(): void {
+    const layerId = layerExpression[0].id;
+    const allLayers = this.view?.map.allLayers.items;
+
+    for (const layer of allLayers) {
+      if (layer.id === layerId && layer) {
+        layer.queryExtent().then((res) => {
+          const { extent } = res;
+          const { latitude, longitude } = extent.center;
+
+          if (latitude !== 0 && longitude !== 0) {
+            this.view?.goTo(extent);
+          }
+        });
+        break;
+      }
+    }
   }
 }
 
