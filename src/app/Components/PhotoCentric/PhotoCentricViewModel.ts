@@ -192,6 +192,37 @@ class PhotoCentricViewModel extends AttachmentViewerViewModel {
     this._initRelatedFeaturesWatcher();
   }
 
+  refreshFeatures(): void {
+    this._initQueryObjectIdPromises().then(() => {
+      this._removeFeatureHighlight();
+      this.set("selectedAttachmentViewerData.objectIdIndex", 0);
+      this.set("selectedAttachmentViewerData.layerFeatureIndex", 0);
+      this.set("selectedAttachmentViewerData.attachmentIndex", 0);
+
+      this.getFirstFeature();
+    });
+  }
+
+  getFirstFeature(): void {
+    const featureLayer = this.selectedAttachmentViewerData?.layerData?.featureLayer as __esri.FeatureLayer;
+    const objectIdField = featureLayer?.objectIdField as string;
+    const sortFieldValue = objectIdField;
+    const fieldOrder = "ASC";
+
+    featureLayer
+      .queryFeatures({
+        outFields: ["*"],
+        where: featureLayer.definitionExpression ? featureLayer.definitionExpression : "1=1",
+        orderByFields: [`${sortFieldValue} ${fieldOrder}`],
+        returnGeometry: true
+      })
+      .then((res) => {
+        if (res.features.length > 0) {
+          this.updateSelectedFeatureFromClickOrSearch(res.features[0]);
+        }
+      });
+  }
+
   // zoomTo
   async zoomTo(): Promise<void> {
     const scale = this.zoomLevel ? parseInt(this.zoomLevel) : (32000 as number);
@@ -1654,7 +1685,6 @@ class PhotoCentricViewModel extends AttachmentViewerViewModel {
         this._queryingAttachments = true;
         this.notifyChange("state");
         this.notifyChange("queryingState");
-        console.log("HERE11111");
         const attachments = await this._handleQueryAttachments({
           attachmentViewerData: selectedAttachmentViewerData,
           queriedFeatures
