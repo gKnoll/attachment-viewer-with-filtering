@@ -722,7 +722,9 @@ class PhotoCentric extends Widget {
     this.view?.when(async () => {
       const filterList = document.getElementById("filter-list");
       if (filterList) {
+        // @ts-ignore
         filterList.view = this.view;
+        // @ts-ignore
         filterList.layerExpressions = layerExpression;
       }
     });
@@ -2210,6 +2212,7 @@ c6.6,0,12-5.4,12-12S18.6,0,12,0L12,0z"
   private _zoomToResultExtent(): void {
     const featureLayer = this.selectedAttachmentViewerData?.get("layerData.featureLayer") as __esri.FeatureLayer;
     const layerId = featureLayer.id;
+    // @ts-ignore
     const allLayers = this.view?.map.allLayers.items;
 
     for (const layer of allLayers) {

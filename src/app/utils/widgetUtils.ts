@@ -1,4 +1,5 @@
 import { eachAlways } from "@arcgis/core/core/promiseUtils";
+// @ts-ignore
 import { esriWidgetProps, IBranchingConditionalOutput } from "../interfaces/interfaces";
 import MobileExpand from "../Components/MobileExpand";
 import { ApplicationConfig } from "templates-common-library/interfaces/applicationBase";
