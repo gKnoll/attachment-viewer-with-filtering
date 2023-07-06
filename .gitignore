@@ -3,3 +3,4 @@ node_modules
 !public/Icon_draw_icon_16_light.svg
 public/assets
 dist
+*.DS_Store
