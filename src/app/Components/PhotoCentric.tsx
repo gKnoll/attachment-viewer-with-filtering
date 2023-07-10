@@ -1221,7 +1221,7 @@ class PhotoCentric extends Widget {
         class={CSS.rotationControls}
         onclick={(e) => this._rotateImage(e, this)}
       >
-        Controls
+        <calcite-icon icon="rotate" scale="l" />
       </div>
     );
   }

@@ -1239,6 +1239,10 @@ $text-color: #c3c3c3;
   transform: translate(-50%, 0);
 }
 
+.rotation-controls:hover {
+  cursor: pointer;
+}
+
 html[dir="rtl"] {
   .esri-photo-centric__photo-viewer-container {
     .esri-photo-centric__image-pagination {
