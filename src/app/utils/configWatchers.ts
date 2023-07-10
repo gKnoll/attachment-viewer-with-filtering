@@ -37,6 +37,7 @@ import {
   addSearch,
   addHome,
   addZoom,
+  addBasemapGallery,
   addLegend,
   addFullScreen,
   addLocateWidget,
@@ -203,6 +204,14 @@ export function getConfigWatchers(
       () => {
         widgetProps.propertyName = "home";
         addHome(widgetProps);
+      },
+      { initial: true }
+    ),
+    watch(
+      () => configurationSetings?.basemapSelector,
+      () => {
+        widgetProps.propertyName = "basemapSelector";
+        addBasemapGallery(widgetProps);
       },
       { initial: true }
     ),

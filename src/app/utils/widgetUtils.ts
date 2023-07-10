@@ -129,6 +129,35 @@ export async function addHome(props: esriWidgetProps) {
   }
 }
 
+export async function addBasemapGallery(props: esriWidgetProps) {
+  const { view, portal } = props;
+
+  const modules = await eachAlways([
+    import("@arcgis/core/widgets/BasemapGallery"),
+    import("@arcgis/core/widgets/Expand")
+  ]);
+
+  const [BasemapGallery, Expand] = modules.map((module) => module.value);
+
+  const basemapGalleryWidget = new BasemapGallery.default({
+    id: "basemapGalleryWidget",
+    view,
+    portal
+  });
+
+  const expand = new Expand.default({
+    content: basemapGalleryWidget,
+    mode: "floating",
+    view
+  });
+
+  view?.ui.add({
+    component: expand,
+    position: "top-left",
+    index: 0
+  });
+}
+
 export async function addLegend(props: esriWidgetProps, messageBundle) {
   const { view, config } = props;
   const { legend } = config;
