@@ -103,6 +103,7 @@ const CSS = {
   zoomSliderButton: "esri-photo-centric__zoom-slider-button",
   slideSymbol: "esri-photo-centric__slide-symbol",
   hideImage: "esri-photo-centric--hide-image",
+  rotationControls: "rotation-controls",
   // feature content
   featureTitleContainer: "esri-photo-centric__feature-title-container",
   attrEditZoomContainer: "esri-photo-centric__attr-edit-zoom-to-container",
@@ -1198,16 +1199,87 @@ class PhotoCentric extends Widget {
 
     const mediaViewerFooter = this._renderMediaViewerFooter();
 
+    const rotationContols = this._renderRotationControls();
+
     return (
       <div class={CSS.rightPanel}>
         <div key={buildKey("image-container")} class={this.classes(downloadEnabled, CSS.photoViewer)}>
           {mediaViewerContainer}
           {onboardingImage}
           {zoomSlider}
+          {rotationContols}
           {mediaViewerFooter}
         </div>
       </div>
     );
+  }
+
+  private _renderRotationControls(): VNode {
+    return (
+      <div
+        key={buildKey("rotation-controls-container")}
+        class={CSS.rotationControls}
+        onclick={(e) => this._rotateImage(e, this)}
+      >
+        Controls
+      </div>
+    );
+  }
+
+  private getRotationDegrees(obj): void {
+    var st = window.getComputedStyle(obj, null);
+    var tr =
+      st.getPropertyValue("-webkit-transform") ||
+      st.getPropertyValue("-moz-transform") ||
+      st.getPropertyValue("-ms-transform") ||
+      st.getPropertyValue("-o-transform") ||
+      st.getPropertyValue("transform") ||
+      "FAIL";
+
+    var angle = 0;
+
+    if (tr === "none") {
+      angle = 0;
+    } else {
+      var values = tr.split("(")[1].split(")")[0].split(",");
+      var a = values[0];
+      var b = values[1];
+      var c = values[2];
+      var d = values[3];
+      var angle = Math.round(Math.atan2(b, a) * (180 / Math.PI));
+    }
+
+    return angle;
+  }
+
+  private _rotateImage(e, that) {
+    e.preventDefault();
+    let img = document.querySelector(".iv-image-wrap img.iv-image");
+    let container = document.querySelector("div.iv-container");
+
+    if (img && container) {
+      let iWidth = img.width;
+      let iHeight = img.height;
+      let cWidth = container.clientWidth;
+      let cHeight = container.clientHeight;
+
+      var angle = that.getRotationDegrees(img);
+
+      img.style.transform = `rotate(${angle + 90}deg)`;
+
+      if ((angle + 90) % 180 === 0) {
+        img.style.width = cWidth + "px";
+        img.style.height = "auto";
+      } else {
+        img.style.width = iWidth / (cWidth / cHeight) + "px";
+        img.style.height = "auto";
+      }
+
+      if (that.zoomSliderNode) {
+        that.zoomSliderNode.value = 100;
+        if (that._imageViewer) that._imageViewer.zoom(that.zoomSliderNode.value);
+      }
+    }
   }
 
   private _renderNoAttachmentsContainer(): VNode {
