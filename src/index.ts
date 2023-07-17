@@ -83,11 +83,20 @@ async function setupCalciteLoader(): Promise<void> {
   } catch {}
 }
 
-async function setupApplicationBase(): Promise<ApplicationBase | void> {
-  const config = applicationConfig as ApplicationConfig;
-  const settings = applicationBaseConfig as ApplicationBaseSettings;
-  
+function _getURLParameter(name: string): string | null {
+  const regexp = (new RegExp("[?|&]" + name + "=" + "([^&;]+?)(&|#|;|$)").exec(location.search) || [null, ""])[1];
+  return decodeURIComponent((regexp as string).replace(/\+/g, "%20")) || null;
+}
 
+async function setupApplicationBase(): Promise<ApplicationBase | void> {
+  let config = applicationConfig as ApplicationConfig;
+  let settings = applicationBaseConfig as ApplicationBaseSettings;
+
+  let webmapId = _getURLParameter("webmapId");
+  if (webmapId) {
+    // @ts-ignore
+    settings.webMap.default = webmapId;
+  }
   const applicationBase = new ApplicationBase({
     config,
     settings
