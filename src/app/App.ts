@@ -164,18 +164,8 @@ class AttachmentViewerApp {
                 return layer.id === selectedLayerId;
               }) as __esri.Layer;
 
-              if (!layer || (layer && !layer.visible)) {
-                const url = new URL(window.location.href);
-                const params = new URLSearchParams(url.search);
-                params.delete("center");
-                params.delete("level");
-                params.delete("attachmentIndex");
-                params.delete("selectedLayerId");
-                params.delete("defaultObjectId");
-                const appid = params.get("appid");
-                window.history.replaceState(null, "", `${location.pathname}?appid=${appid}`);
-                location.reload();
-                return;
+              if (layer && !layer.visible) {
+                layer.visible = true;
               }
             }
           }

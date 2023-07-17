@@ -136,6 +136,7 @@ export interface RelatedFeatureWithAttachments {
 }
 
 export interface IBranchingConditionalOutput {
+  // @ts-ignore
   branchValue: "string";
   branchOptionsFieldNames: string[];
 }

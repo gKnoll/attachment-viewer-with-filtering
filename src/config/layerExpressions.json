@@ -1,0 +1,79 @@
+[
+  {
+    "id": "18964daa468-layer-4",
+    "title": "TSF Inspection Observations",
+    "operator": " AND ",
+    "expressions": [
+      {
+        "id": 1,
+        "name": "Site",
+        "type": "string",
+        "field": "site",
+        "index": 1
+      },
+      {
+        "id": 3,
+        "name": "Facility",
+        "type": "string",
+        "field": "facility",
+        "index": 3
+      },
+      {
+        "id": 4,
+        "name": "Resolution Status",
+        "type": "string",
+        "field": "rstatus",
+        "index:": 4
+      },
+      {
+        "id": 5,
+        "name": "Component",
+        "type": "string",
+        "field": "component",
+        "index": 5
+      },
+      {
+        "id": 6,
+        "name": "Observation",
+        "type": "string",
+        "field": "observation",
+        "index": 6
+      },
+      {
+        "id": 7,
+        "name": "Severity",
+        "type": "coded-value",
+        "field": "severity",
+        "index": 7
+      },
+      {
+        "id": 10,
+        "name": "Created User",
+        "type": "string",
+        "field": "created_user",
+        "index": 10
+      },
+      {
+        "id": 11,
+        "name": "Created Date",
+        "type": "date",
+        "field": "created_date",
+        "index": 11
+      }
+    ]
+  },
+  {
+    "id": "187e02944b3-layer-2",
+    "title": "TSF Inspection Observations TEST 2",
+    "operator": " AND ",
+    "expressions": [
+      {
+        "id": 1,
+        "name": "Site",
+        "type": "string",
+        "field": "site",
+        "index": 1
+      }
+    ]
+  }
+]
