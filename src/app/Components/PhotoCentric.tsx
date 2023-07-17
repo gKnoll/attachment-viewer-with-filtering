@@ -738,8 +738,14 @@ class PhotoCentric extends Widget {
           }
         }
       } else {
-        // @ts-ignore
-        filterList.layerExpressions = [layerExpressions[0]];
+        if (filterList) {
+          // @ts-ignore
+          filterList.view = this.view;
+          if (layerExpressions[0]) {
+            // @ts-ignore
+            filterList.layerExpressions = [layerExpressions[0]];
+          }
+        }
       }
     });
 
