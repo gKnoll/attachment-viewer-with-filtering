@@ -33,7 +33,7 @@ import Common_t9n from "../../t9n/Common/common.json";
 import PhotoCentric_t9n from "../../t9n/Components/PhotoCentric/resources.json";
 import OnboardingContent from "./OnboardingContent";
 
-import layerExpression from "./../../config/layerExpression.json";
+import layerExpressions from "./../../config/layerExpressions.json";
 const CSS = {
   base: "esri-photo-centric",
   // onboarding
@@ -722,11 +722,19 @@ class PhotoCentric extends Widget {
   private _renderInstantAppsFilter(): any {
     this.view?.when(async () => {
       const filterList = document.getElementById("filter-list");
+
+      let layerExpression = layerExpressions.find((expr) => {
+        return expr.id === this.selectedLayerId;
+      });
+
       if (filterList) {
         // @ts-ignore
         filterList.view = this.view;
-        // @ts-ignore
-        filterList.layerExpressions = layerExpression;
+
+        if (layerExpression) {
+          // @ts-ignore
+          filterList.layerExpressions = [layerExpression];
+        }
       }
     });
 
@@ -765,7 +773,6 @@ class PhotoCentric extends Widget {
           <div>
             <instant-apps-filter-list
               id="filter-list"
-              layerExpressions={layerExpression}
               view={this.view?.map}
               onfilterUpdate={() => {
                 this._zoomToResultExtent();

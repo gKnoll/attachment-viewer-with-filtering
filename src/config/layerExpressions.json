@@ -1,6 +1,6 @@
 [
   {
-    "id": "187e02944b3-layer-2",
+    "id": "18964daa468-layer-4",
     "title": "TSF Inspection Observations",
     "operator": " AND ",
     "expressions": [
@@ -59,6 +59,20 @@
         "type": "date",
         "field": "created_date",
         "index": 11
+      }
+    ]
+  },
+  {
+    "id": "187e02944b3-layer-2",
+    "title": "TSF Inspection Observations TEST 2",
+    "operator": " AND ",
+    "expressions": [
+      {
+        "id": 1,
+        "name": "Site",
+        "type": "string",
+        "field": "site",
+        "index": 1
       }
     ]
   }
