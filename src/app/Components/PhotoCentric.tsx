@@ -723,18 +723,23 @@ class PhotoCentric extends Widget {
     this.view?.when(async () => {
       const filterList = document.getElementById("filter-list");
 
-      let layerExpression = layerExpressions.find((expr) => {
-        return expr.id === this.selectedLayerId;
-      });
+      if (this.selectedLayerId) {
+        let layerExpression = layerExpressions.find((expr) => {
+          return expr.id === this.selectedLayerId;
+        });
 
-      if (filterList) {
-        // @ts-ignore
-        filterList.view = this.view;
-
-        if (layerExpression) {
+        if (filterList) {
           // @ts-ignore
-          filterList.layerExpressions = [layerExpression];
+          filterList.view = this.view;
+
+          if (layerExpression) {
+            // @ts-ignore
+            filterList.layerExpressions = [layerExpression];
+          }
         }
+      } else {
+        // @ts-ignore
+        filterList.layerExpressions = [layerExpressions[0]];
       }
     });
 
