@@ -208,6 +208,7 @@ export function getConfigWatchers(
       { initial: true }
     ),
     watch(
+      // @ts-ignore
       () => configurationSetings?.basemapSelector,
       () => {
         widgetProps.propertyName = "basemapSelector";

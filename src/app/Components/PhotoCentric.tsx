@@ -1233,7 +1233,8 @@ class PhotoCentric extends Widget {
     );
   }
 
-  private getRotationDegrees(obj): void {
+  // @ts-ignore
+  private getRotationDegrees(obj): number {
     var st = window.getComputedStyle(obj, null);
     var tr =
       st.getPropertyValue("-webkit-transform") ||
@@ -1251,8 +1252,9 @@ class PhotoCentric extends Widget {
       var values = tr.split("(")[1].split(")")[0].split(",");
       var a = values[0];
       var b = values[1];
-      var c = values[2];
-      var d = values[3];
+      // var c = values[2];
+      // var d = values[3];
+      // @ts-ignore
       var angle = Math.round(Math.atan2(b, a) * (180 / Math.PI));
     }
 
@@ -1265,20 +1267,26 @@ class PhotoCentric extends Widget {
     let container = document.querySelector("div.iv-container");
 
     if (img && container) {
+      // @ts-ignore
       let iWidth = img.width;
-      let iHeight = img.height;
+      // let iHeight = img.height;
       let cWidth = container.clientWidth;
       let cHeight = container.clientHeight;
 
       var angle = that.getRotationDegrees(img);
 
+      // @ts-ignore
       img.style.transform = `rotate(${angle + 90}deg)`;
 
       if ((angle + 90) % 180 === 0) {
+        // @ts-ignore
         img.style.width = cWidth + "px";
+        // @ts-ignore
         img.style.height = "auto";
       } else {
+        // @ts-ignore
         img.style.width = iWidth / (cWidth / cHeight) + "px";
+        // @ts-ignore
         img.style.height = "auto";
       }
 
