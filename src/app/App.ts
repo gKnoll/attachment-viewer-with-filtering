@@ -13,6 +13,8 @@ import ApplicationBase from "templates-common-library/baseClasses/ApplicationBas
 
 import ConfigurationSettings from "./ConfigurationSettings/ConfigurationSettings";
 
+import layerExpressions from "./../config/layerExpressions.json";
+
 const CSS = {
   loading: "configurable-application--loading"
 };
@@ -115,13 +117,26 @@ class AttachmentViewerApp {
 
     const appItemTitle = results?.applicationItem?.value?.title;
 
-    const title = this._configurationSettings?.title
+    let title = this._configurationSettings?.title
       ? this._configurationSettings.title
       : appItemTitle
       ? appItemTitle
       : this.item?.title
       ? this.item.title
       : "Attachment Viewer";
+
+    // use config title if specifying layer
+    let layrId = this._getURLParameter("selectedLayerId");
+    if (layrId) {
+      console.log(layerExpressions);
+      let expr = layerExpressions.find((l) => {
+        return l.id === layrId;
+      });
+      if (expr) {
+        title = expr.title;
+      }
+    }
+
     setPageTitle(title);
     config.title = title;
 
